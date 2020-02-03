@@ -14,10 +14,12 @@ Game.prototype.roll = function(roll1, roll2){
 
 Game.prototype.score = function(frames, turn) {
   for (var i = 0; i < this.frames.length; i++){
-    if (frames[i].strike == true && frames[i+1].strike == false) {
+    if (frames[i].strike == true && frames[i+1].strike == false) { // extract STRIKE
       this.totalScore += frames[i].rollOne + (frames[i+1].rollOne + frames[i+1].rollTwo)
     } else if (frames[i].strike == true && frames[i+1].strike == true) {
       this.totalScore += frames[i].rollOne + (frames[i+1].rollOne + frames[i+2].rollOne)
+    } else if (frames[i].spare == true) { //extract SPARE
+      this.totalScore += frames[i].rollOne + frames[i].rollTwo + frames[i+1].rollOne
     } else {
       this.totalScore += frames[i].rollOne + frames[i].rollTwo
     }
@@ -25,17 +27,3 @@ Game.prototype.score = function(frames, turn) {
   }
   
 }
-
-// Game.prototype.strikeScore(frames) {
-//   for (var i = 0; i < this.frames.length; i++){
-//     if (frames[i].strike == true && frames[i+1].strike == false) {
-//       this.totalScore += frames[i].rollOne + (frames[i+1].rollOne + frames[i+1].rollTwo)
-//     } else if (frames[i].strike == true && frames[i+1].strike == true) {
-//       this.totalScore += frames[i].rollOne + (frames[i+1].rollOne + frames[i+2].rollOne)
-//     } else {
-//       this.totalScore += frames[i].rollOne + frames[i].rollTwo
-//     }
-    
-//   }
-// }
-

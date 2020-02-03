@@ -7,6 +7,12 @@ describe('Game', function(){
     
   })
 
+  function rollMany(n, pin1, pin2) {
+    for (var i = 0; i < n; i++) {
+      game.roll(pin1,pin2);
+    }
+  }
+
   it('starts with a score of zero', function() {
     expect(game.totalScore).toEqual(0)
   })
@@ -22,9 +28,7 @@ describe('Game', function(){
 
   describe('roll', function() {
     it('adds 3 frames of gutter balls to frames array', function() {
-      game.roll(0,0)
-      game.roll(0,0)
-      game.roll(0,0)
+      rollMany(3, 0, 0)
       expect(game.frames.length).toEqual(3)
     })
     it('adds 1 frame of  1 and 1', function() {
@@ -45,9 +49,7 @@ describe('Game', function(){
       expect(game.totalScore).toEqual(4)
     })
     it('can score a game of all 1s', function() {
-      for (var i = 0; i < 10; i++) {
-        game.roll(1,1);
-      }
+      rollMany(10, 1, 1)
       game.score(game.frames)
       expect(game.totalScore).toEqual(20)
     })
@@ -58,26 +60,21 @@ describe('Game', function(){
       expect(game.totalScore).toEqual(14)
     })
     it('can score a game of 5 strikes & 2 normal frames', function() {
-      for (var i = 0; i < 5; i++) {
-        game.roll(10, 0);
-      }
-      game.roll(1, 1);
-      game.roll(1, 1);
+      rollMany(5, 10, 0)
+      rollMany(2, 1, 1)
       game.score(game.frames)
-      console.log(game.frames)
-      console.log(game.totalScore)
       expect(game.totalScore).toEqual(127)
     })
     // cant score a perfect game at the moment as it just keeps trying to add the next balls when there are none 
 
   })
 
-  describe('strike',function() {
-    it('strikeScore scores 1 strike and 2 normal bowls', function() {
-      game.roll(10, 0);
-      game.roll(1,1); 
-      game.strikeScore(frames)
-      expect(game.totalScore).toEqual(14)
+  describe('spare',function() {
+    it('SPARE scores 1 spare and adds next ball', function() {
+      game.roll(5, 5);
+      rollMany(2, 1, 1)
+      game.score(frames);
+      expect(game.totalScore).toEqual(13)
     })
   })
 })
